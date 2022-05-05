@@ -21,6 +21,13 @@ public class Correntista {
 
     public Correntista(){}
 
+    public Correntista(Integer id, String cpf, String nome, Conta conta) {
+        this.id = id;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.conta = conta;
+    }
+
     public Integer getId() {
         return id;
     }
