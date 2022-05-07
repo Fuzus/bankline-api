@@ -5,10 +5,7 @@ import com.dio.santander.bankline.api.model.Movimentacao;
 import com.dio.santander.bankline.api.repository.MovimentacaoRepository;
 import com.dio.santander.bankline.api.service.MovimentacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,12 +23,23 @@ public class MovimentacaoControler {
 //    @GetMapping
     @RequestMapping(method = RequestMethod.GET)
     public List<Movimentacao> findAll() {
-        return repository.findAll();
+        List<Movimentacao> movimentacoes = repository.findAll();
+        movimentacoes.forEach(x -> {
+            x.setDataHora(x.getDataHora());
+        });
+
+        return movimentacoes;
     }
 
 //    @PostMapping
     @RequestMapping(method = RequestMethod.POST)
     public void save(@RequestBody NovaMovimentacao novaMovimentacao) {
         service.save(novaMovimentacao);
+    }
+
+//    @RequestMapping(method = RequestMethod.GET, value = "/{idConta}")
+    @GetMapping("/{idConta}")
+    public List<Movimentacao> findByIdConta(@PathVariable(value = "idConta") int idConta) {
+        return repository.findByIdConta(idConta);
     }
 }
